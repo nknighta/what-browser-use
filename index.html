@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <title>What browser use</title>
+</head>
+
+<body>
+    <p id="agentDisp"></p>
+    <table id="broserinfoview"></table>
+</body>
+<script>
+    let agent = window.navigator.userAgent;
+
+    let getBrowser = function () {
+        var ua = window.navigator.userAgent.toLowerCase();
+        var ver = window.navigator.appVersion.toLowerCase();
+        var name = 'unknown';
+
+        if (ua.indexOf("msie") != -1) {
+            if (ver.indexOf("msie 6.") != -1) {
+                name = 'ie6';
+            } else if (ver.indexOf("msie 7.") != -1) {
+                name = 'ie7';
+            } else if (ver.indexOf("msie 8.") != -1) {
+                name = 'ie8';
+            } else if (ver.indexOf("msie 9.") != -1) {
+                name = 'ie9';
+            } else if (ver.indexOf("msie 10.") != -1) {
+                name = 'ie10';
+            } else {
+                name = 'ie';
+            }
+        } else if (ua.indexOf('trident/7') != -1) {
+            name = 'ie11';
+        } else if (ua.indexOf('chrome') != -1) {
+            name = 'chrome';
+        } else if (ua.indexOf('safari') != -1) {
+            name = 'safari';
+        } else if (ua.indexOf('opera') != -1) {
+            name = 'opera';
+        } else if (ua.indexOf('firefox') != -1) {
+            name = 'firefox';
+        }
+        return name;
+    };
+
+    const thusBrowser = getBrowser();
+
+    document.getElementById("agentDisp").innerHTML = agent;
+    index = agent.indexOf("Chrome");
+    // get the version of the browser
+    // chromw
+    let versionofChrome = agent.substring(index + 0, index + 17);
+    // firefox
+    let versionofSafari = agent.substring(index + 17, index + 30);
+    let versionofFirefox = agent.substring(index + -100, index + -70);
+
+    // Judgment of browser name
+    let getVersion = function () {
+        if (thusBrowser == "chrome") {
+            return versionofChrome;
+        } else if (thusBrowser == "safari") {
+            return versionofSafari;
+        } else if (thusBrowser == "firefox") {
+            return versionofFirefox;
+        }
+    }
+
+    let aver = getVersion();
+    document.getElementById("agentDisp").innerHTML = "Chrome version: " + aver;
+
+    console.log("browser info");
+    let h = window.innerHeight;
+    let w = window.innerWidth;
+
+    // browser info list array
+    let infoarr = {
+        "height": h,
+        "width": w,
+        "agent": agent.substring(0, index + 6),
+        "version": aver
+    }
+
+    // get table id for display browser info
+    let table = document.getElementById("broserinfoview");
+    for (let listindex = 0; listindex < 4; listindex++) {
+        table.appendChild(document.createElement("tr"));
+        table.appendChild(document.createElement("td")).innerHTML = Object.keys(infoarr)[listindex];
+        table.appendChild(document.createElement("td")).innerHTML = Object.values(infoarr)[listindex];
+    }
+    
+    console.table(infoarr);
+</script>
+
+</html>
